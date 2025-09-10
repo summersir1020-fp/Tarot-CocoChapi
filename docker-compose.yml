@@ -1,0 +1,153 @@
+# ココチャピ・タロット Docker Compose設定
+# 開発・本番環境でのデプロイメント管理
+
+version: '3.8'
+
+services:
+  # ========================================
+  # メインアプリケーション
+  # ========================================
+  kokochapi-tarot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_DATE: ${BUILD_DATE:-}
+        VCS_REF: ${VCS_REF:-}
+        VERSION: ${VERSION:-3.2.0}
+    
+    image: kokochapi-tarot:latest
+    
+    container_name: kokochapi-tarot-app
+    
+    # ポートマッピング
+    ports:
+      - "80:80"      # HTTP
+      - "443:443"    # HTTPS（将来のSSL対応）
+    
+    # 環境変数
+    environment:
+      - TZ=Asia/Tokyo
+      - NGINX_WORKER_PROCESSES=auto
+      - NGINX_WORKER_CONNECTIONS=1024
+    
+    # ヘルスチェック
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # リソース制限
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    
+    # 再起動ポリシー
+    restart: unless-stopped
+    
+    # セキュリティ設定
+    security_opt:
+      - no-new-privileges:true
+    
+    # 読み取り専用ファイルシステム（ログ用の一時領域は除く）
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx:noexec,nosuid,size=50m
+      - /var/run:noexec,nosuid,size=50m
+      - /tmp:noexec,nosuid,size=50m
+    
+    # ログ設定
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # ボリュームマウント（開発用）
+    volumes:
+      # 開発時のみ有効化（本番では削除推奨）
+      # - ./:/usr/share/nginx/html:ro
+      - nginx-cache:/var/cache/nginx
+    
+    # ネットワーク
+    networks:
+      - tarot-network
+
+  # ========================================
+  # リバースプロキシ（本番用・オプション）
+  # ========================================
+  nginx-proxy:
+    image: nginx:1.25-alpine
+    container_name: kokochapi-tarot-proxy
+    
+    # ポートマッピング（プロキシ用）
+    ports:
+      - "8080:80"
+    
+    # カスタム設定
+    volumes:
+      - ./docker/proxy.conf:/etc/nginx/conf.d/default.conf:ro
+      - proxy-cache:/var/cache/nginx
+    
+    # 依存関係
+    depends_on:
+      - kokochapi-tarot
+    
+    # 環境変数
+    environment:
+      - TZ=Asia/Tokyo
+    
+    # ネットワーク
+    networks:
+      - tarot-network
+    
+    # リソース制限
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M
+    
+    # 再起動ポリシー
+    restart: unless-stopped
+    
+    # デフォルトでは無効（必要に応じてコメントアウト）
+    profiles:
+      - proxy
+
+# ========================================
+# ネットワーク設定
+# ========================================
+networks:
+  tarot-network:
+    driver: bridge
+    name: kokochapi-tarot-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+
+# ========================================
+# ボリューム設定
+# ========================================
+volumes:
+  nginx-cache:
+    name: kokochapi-nginx-cache
+  
+  proxy-cache:
+    name: kokochapi-proxy-cache
+
+# ========================================
+# 環境変数設定例（.envファイル用）
+# ========================================
+# BUILD_DATE=2024-09-10T00:00:00Z
+# VCS_REF=main
+# VERSION=3.2.0
+# COMPOSE_PROJECT_NAME=kokochapi-tarot

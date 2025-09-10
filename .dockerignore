@@ -1,0 +1,181 @@
+# ココチャピ・タロット .dockerignore
+# Dockerイメージに含めないファイル・ディレクトリを指定
+
+# ========================================
+# Git関連ファイル
+# ========================================
+.git
+.gitignore
+.gitattributes
+.gitkeep
+
+# ========================================
+# 開発・ドキュメント関連
+# ========================================
+# 開発ドキュメント
+README_GITHUB.md
+GITHUB_SETUP.md
+DEVELOPMENT_ROADMAP.md
+TODO.md
+CHANGELOG.md
+
+# 開発用設定ファイル
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Docker関連（自分自身）
+# ========================================
+Dockerfile*
+.dockerignore
+docker-compose*.yml
+docker/
+
+# ========================================
+# CI/CD・デプロイ関連
+# ========================================
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+Jenkinsfile
+
+# ========================================
+# Node.js関連（将来の拡張用）
+# ========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
+package-lock.json
+yarn.lock
+
+# ========================================
+# 環境・設定ファイル
+# ========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+
+# ========================================
+# ビルド・出力ファイル
+# ========================================
+/dist
+/build
+/out
+coverage/
+.nyc_output/
+
+# ========================================
+# ログ・一時ファイル
+# ========================================
+*.log
+logs/
+tmp/
+temp/
+.cache/
+.temp/
+
+# ========================================
+# バックアップ・テストファイル
+# ========================================
+backup/
+*.backup
+*.bak
+test-files/
+experimental/
+sandbox/
+
+# ========================================
+# エディタ・IDEファイル
+# ========================================
+.project
+.metadata
+bin/
+*.tmp
+*.sublime-project
+*.sublime-workspace
+
+# ========================================
+# OS生成ファイル
+# ========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ========================================
+# セキュリティ関連
+# ========================================
+# 証明書・キー
+*.pem
+*.key
+*.crt
+secrets/
+.secrets/
+
+# ========================================
+# 大きなメディアファイル
+# ========================================
+# 動画ファイル
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+
+# 大きな画像ファイル
+*.psd
+*.ai
+
+# ========================================
+# プロジェクト固有の除外
+# ========================================
+# 個人的なメモ・設定
+NOTES.md
+DEVELOPMENT.md
+TODO_PRIVATE.md
+.personal-config
+personal-notes/
+
+# デバッグファイル
+debug.html
+debug.js
+debug.log
