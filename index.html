@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ココチャピ・タロット - 星空の書斎で自分と向き合う</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tarot-cards.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 星空背景 -->
+        <div class="starry-background">
+            <div class="stars"></div>
+            <div class="stars2"></div>
+            <div class="stars3"></div>
+        </div>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+            <!-- ヘッダー -->
+            <header class="app-header">
+                <div class="header-content">
+                    <div class="title-section">
+                        <h1 class="app-title">ココチャピ・タロット</h1>
+                        <p class="app-subtitle">〜 星空の書斎で、自分と向き合う一夜 〜</p>
+                    </div>
+                    <div class="header-controls">
+                        <button id="audio-toggle-btn" class="audio-button" title="音響効果のオン/オフ">
+                            🔊 音響
+                        </button>
+                        <button id="history-btn" class="history-button" title="占い履歴を見る">
+                            📚 履歴
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- ナビゲーションは履歴ボタンで代替するため削除 -->
+
+            <!-- シーズー案内役 -->
+            <div class="guide-character">
+                <div class="shih-tzu-avatar">
+                    <span class="dog-emoji">🐕</span>
+                </div>
+                <div class="guide-message">
+                    <p id="guide-text">こんばんは！私がココチャピです。今夜は一緒にタロットの世界を旅しませんか？</p>
+                </div>
+            </div>
+
+            <!-- 占い実行エリア -->
+            <div id="reading-section" class="main-section active">
+                <!-- タロット占いエリア -->
+                <div class="tarot-area">
+                <div class="question-section">
+                    <h2>あなたの質問</h2>
+                    <textarea 
+                        id="user-question" 
+                        placeholder="知りたいことや悩んでいることを、心の中で思い浮かべてください..."
+                        rows="3"
+                    ></textarea>
+                </div>
+
+                <!-- デッキ選択 -->
+                <div class="deck-selection">
+                    <h3>使用するデッキを選んでください</h3>
+                    <div class="deck-options">
+                        <button id="major-only-btn" class="deck-option active" data-deck="major-only">
+                            <div class="option-icon">🌟</div>
+                            <div class="option-title">大アルカナのみ</div>
+                            <div class="option-desc">22枚（初心者向け）</div>
+                        </button>
+                        <button id="full-deck-btn" class="deck-option" data-deck="full-deck">
+                            <div class="option-icon">🃏</div>
+                            <div class="option-title">フルデッキ</div>
+                            <div class="option-desc">78枚（本格派向け）</div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 占い方法選択 -->
+                <div class="spread-selection">
+                    <h3>占い方法を選んでください</h3>
+                    <div class="spread-options">
+                        <button id="one-card-btn" class="spread-option active" data-spread="one-card">
+                            <div class="option-icon">🃏</div>
+                            <div class="option-title">ワンカード</div>
+                            <div class="option-desc">シンプルな1枚占い</div>
+                        </button>
+                        <button id="three-card-btn" class="spread-option" data-spread="three-card">
+                            <div class="option-icon">🃏🃏🃏</div>
+                            <div class="option-title">スリーカード</div>
+                            <div class="option-desc">過去・現在・未来</div>
+                        </button>
+                        <button id="celtic-cross-btn" class="spread-option" data-spread="celtic-cross">
+                            <div class="option-icon">✨🔮✨</div>
+                            <div class="option-title">ケルト十字</div>
+                            <div class="option-desc">本格的な10枚展開</div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card-section">
+                    <!-- ワンカード表示エリア -->
+                    <div id="one-card-area" class="card-area active">
+                        <div id="card-deck" class="card-deck">
+                            <div class="card-back" data-card-id="placeholder">
+                                <div class="card-content">
+                                    <div class="card-pattern"></div>
+                                    <span class="card-text">タロット</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="draw-card-btn" class="draw-button">
+                            ✨ カードを引く ✨
+                        </button>
+                    </div>
+
+                    <!-- スリーカード表示エリア -->
+                    <div id="three-card-area" class="card-area">
+                        <div class="three-card-positions">
+                            <div class="card-position">
+                                <h4>過去</h4>
+                                <div class="card-back three-card" data-position="past">
+                                    <div class="card-content">
+                                        <div class="card-pattern"></div>
+                                        <span class="card-text">過去</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-position">
+                                <h4>現在</h4>
+                                <div class="card-back three-card" data-position="present">
+                                    <div class="card-content">
+                                        <div class="card-pattern"></div>
+                                        <span class="card-text">現在</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-position">
+                                <h4>未来</h4>
+                                <div class="card-back three-card" data-position="future">
+                                    <div class="card-content">
+                                        <div class="card-pattern"></div>
+                                        <span class="card-text">未来</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="draw-three-cards-btn" class="draw-button">
+                            ✨ 3枚のカードを引く ✨
+                        </button>
+                    </div>
+
+                    <!-- ケルト十字表示エリア -->
+                    <div id="celtic-cross-area" class="card-area">
+                        <div class="celtic-cross-layout">
+                            <div class="celtic-cross-positions">
+                                <!-- 中央の十字 -->
+                                <div class="cross-center">
+                                    <div class="card-position center" data-position="present">
+                                        <h4>現在の状況</h4>
+                                        <div class="card-back celtic-card" data-position="present">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">現在</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-position challenge" data-position="challenge">
+                                        <h4>課題・障害</h4>
+                                        <div class="card-back celtic-card horizontal" data-position="challenge">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">課題</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 上下左右 -->
+                                <div class="card-position past" data-position="past">
+                                    <h4>過去</h4>
+                                    <div class="card-back celtic-card" data-position="past">
+                                        <div class="card-content"><div class="card-pattern"></div><span class="card-text">過去</span></div>
+                                    </div>
+                                </div>
+                                <div class="card-position future" data-position="future">
+                                    <h4>近い未来</h4>
+                                    <div class="card-back celtic-card" data-position="future">
+                                        <div class="card-content"><div class="card-pattern"></div><span class="card-text">未来</span></div>
+                                    </div>
+                                </div>
+                                <div class="card-position crown" data-position="crown">
+                                    <h4>可能性</h4>
+                                    <div class="card-back celtic-card" data-position="crown">
+                                        <div class="card-content"><div class="card-pattern"></div><span class="card-text">可能性</span></div>
+                                    </div>
+                                </div>
+                                <div class="card-position foundation" data-position="foundation">
+                                    <h4>基盤</h4>
+                                    <div class="card-back celtic-card" data-position="foundation">
+                                        <div class="card-content"><div class="card-pattern"></div><span class="card-text">基盤</span></div>
+                                    </div>
+                                </div>
+
+                                <!-- 右側の縦列 -->
+                                <div class="side-column">
+                                    <div class="card-position yourself" data-position="yourself">
+                                        <h4>あなた自身</h4>
+                                        <div class="card-back celtic-card" data-position="yourself">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">自分</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-position environment" data-position="environment">
+                                        <h4>周囲の影響</h4>
+                                        <div class="card-back celtic-card" data-position="environment">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">環境</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-position hopes" data-position="hopes">
+                                        <h4>希望と恐れ</h4>
+                                        <div class="card-back celtic-card" data-position="hopes">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">希望</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-position outcome" data-position="outcome">
+                                        <h4>最終結果</h4>
+                                        <div class="card-back celtic-card" data-position="outcome">
+                                            <div class="card-content"><div class="card-pattern"></div><span class="card-text">結果</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="draw-celtic-cross-btn" class="draw-button">
+                            ✨ ケルト十字の10枚を引く ✨
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ワンカード結果表示エリア -->
+                <div id="one-card-result" class="result-area" style="display: none;">
+                    <div class="result-card">
+                        <img id="result-card-image" src="" alt="引いたカード" class="card-image">
+                        <h3 id="result-card-name" class="card-name"></h3>
+                        <p id="result-card-position" class="card-position"></p>
+                    </div>
+                    <div class="result-interpretation">
+                        <h4>カードからのメッセージ</h4>
+                        <p id="result-interpretation-text" class="interpretation-text"></p>
+                    </div>
+                    <button id="new-reading-btn" class="new-reading-button">
+                        もう一度占う
+                    </button>
+                </div>
+
+                <!-- スリーカード結果表示エリア -->
+                <div id="three-card-result" class="result-area three-card-result" style="display: none;">
+                    <h3 class="result-title">あなたのスリーカード占い結果</h3>
+                    
+                    <div class="three-card-results">
+                        <div class="card-result">
+                            <h4>過去</h4>
+                            <img id="past-card-image" src="" alt="過去のカード" class="card-image small">
+                            <h5 id="past-card-name" class="card-name"></h5>
+                            <p id="past-card-position" class="card-position"></p>
+                            <div class="card-interpretation">
+                                <p id="past-interpretation" class="interpretation-text"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-result">
+                            <h4>現在</h4>
+                            <img id="present-card-image" src="" alt="現在のカード" class="card-image small">
+                            <h5 id="present-card-name" class="card-name"></h5>
+                            <p id="present-card-position" class="card-position"></p>
+                            <div class="card-interpretation">
+                                <p id="present-interpretation" class="interpretation-text"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="card-result">
+                            <h4>未来</h4>
+                            <img id="future-card-image" src="" alt="未来のカード" class="card-image small">
+                            <h5 id="future-card-name" class="card-name"></h5>
+                            <p id="future-card-position" class="card-position"></p>
+                            <div class="card-interpretation">
+                                <p id="future-interpretation" class="interpretation-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overall-interpretation">
+                        <h4>総合的なメッセージ</h4>
+                        <p id="overall-message" class="interpretation-text"></p>
+                    </div>
+                    
+                    <button id="new-three-card-reading-btn" class="new-reading-button">
+                        もう一度占う
+                    </button>
+                </div>
+
+                <!-- ケルト十字結果表示エリア -->
+                <div id="celtic-cross-result" class="result-area celtic-cross-result" style="display: none;">
+                    <h3 class="result-title">ケルト十字占い結果</h3>
+                    
+                    <div class="celtic-cross-results">
+                        <div class="result-section">
+                            <h4>現在の状況とその影響</h4>
+                            <div class="result-cards-row">
+                                <div class="card-result" id="present-result">
+                                    <h5>現在の状況</h5>
+                                    <img id="celtic-present-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-present-name"></div>
+                                    <div class="card-interpretation" id="celtic-present-meaning"></div>
+                                </div>
+                                <div class="card-result" id="challenge-result">
+                                    <h5>課題・障害</h5>
+                                    <img id="celtic-challenge-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-challenge-name"></div>
+                                    <div class="card-interpretation" id="celtic-challenge-meaning"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>時間の流れ</h4>
+                            <div class="result-cards-row">
+                                <div class="card-result">
+                                    <h5>過去</h5>
+                                    <img id="celtic-past-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-past-name"></div>
+                                </div>
+                                <div class="card-result">
+                                    <h5>近い未来</h5>
+                                    <img id="celtic-future-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-future-name"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>内面と環境</h4>
+                            <div class="result-cards-row">
+                                <div class="card-result">
+                                    <h5>あなた自身</h5>
+                                    <img id="celtic-yourself-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-yourself-name"></div>
+                                </div>
+                                <div class="card-result">
+                                    <h5>周囲の影響</h5>
+                                    <img id="celtic-environment-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-environment-name"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="result-section">
+                            <h4>最終的な展望</h4>
+                            <div class="result-cards-row">
+                                <div class="card-result">
+                                    <h5>希望と恐れ</h5>
+                                    <img id="celtic-hopes-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-hopes-name"></div>
+                                </div>
+                                <div class="card-result">
+                                    <h5>最終結果</h5>
+                                    <img id="celtic-outcome-image" src="" alt="" class="card-image mini">
+                                    <div class="card-name" id="celtic-outcome-name"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="overall-interpretation">
+                        <h4>ケルト十字からの総合的なメッセージ</h4>
+                        <p id="celtic-overall-message" class="interpretation-text"></p>
+                    </div>
+                    
+                    <button id="new-celtic-cross-reading-btn" class="new-reading-button">
+                        もう一度占う
+                    </button>
+                </div>
+                </div> <!-- tarot-area end -->
+            </div> <!-- reading-section end -->
+
+            <!-- 占い履歴エリア -->
+            <div id="history-section" class="main-section">
+                <div class="history-area">
+                    <div class="history-header">
+                        <h2>📚 あなたの占い履歴</h2>
+                        <div class="history-stats">
+                            <span id="history-count">0件の占い記録</span>
+                            <button id="export-history-btn" class="export-button">
+                                📄 履歴をエクスポート
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="history-filters">
+                        <select id="spread-filter" class="filter-select">
+                            <option value="all">すべての占い方法</option>
+                            <option value="one-card">ワンカード占い</option>
+                            <option value="three-card">スリーカード占い</option>
+                        </select>
+                        <select id="sort-filter" class="filter-select">
+                            <option value="newest">新しい順</option>
+                            <option value="oldest">古い順</option>
+                        </select>
+                    </div>
+
+                    <div id="history-list" class="history-list">
+                        <!-- 履歴アイテムがここに動的に生成されます -->
+                    </div>
+
+                    <div id="no-history" class="no-history" style="display: none;">
+                        <div class="no-history-content">
+                            <span class="no-history-icon">🌟</span>
+                            <h3>まだ占い履歴がありません</h3>
+                            <p>占いを行うと、ここに結果が保存されます。<br>「占いを行う」タブから始めてみましょう！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 占い履歴画面 -->
+            <div id="history-screen" class="screen history-screen" style="display: none;">
+                <div class="history-header">
+                    <button id="back-to-main-btn" class="back-button">← 占いに戻る</button>
+                    <h2>占い履歴</h2>
+                    <div class="history-controls">
+                        <button id="export-history-btn" class="export-button" title="履歴をダウンロード">
+                            💾 エクスポート
+                        </button>
+                        <button id="clear-all-history-btn" class="clear-button" title="全履歴を削除">
+                            🗑️ 全削除
+                        </button>
+                    </div>
+                </div>
+
+                <div class="history-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">総占い回数</span>
+                        <span id="total-readings" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">ワンカード</span>
+                        <span id="one-card-readings" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">スリーカード</span>
+                        <span id="three-card-readings" class="stat-value">0</span>
+                    </div>
+                </div>
+
+                <div class="history-filter">
+                    <select id="history-filter-select">
+                        <option value="all">すべて表示</option>
+                        <option value="one-card">ワンカードのみ</option>
+                        <option value="three-card">スリーカードのみ</option>
+                        <option value="celtic-cross">ケルト十字のみ</option>
+                    </select>
+                </div>
+
+                <div id="history-list" class="history-list">
+                    <div class="no-history">
+                        <p>まだ占い履歴がありません</p>
+                        <p>占いを行うと、ここに履歴が表示されます</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- フッター -->
+        <footer class="app-footer">
+            <p class="disclaimer">※ この占いは娯楽目的です。最終的な判断は自己責任でお願いします。</p>
+        </footer>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/card-generator.js"></script>
+    <script src="js/shih-tzu-generator.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/minor-arcana-data.js"></script>
+    <script src="js/tarot-data.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

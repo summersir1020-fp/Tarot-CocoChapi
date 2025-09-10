@@ -1,0 +1,216 @@
+# ココチャピ・タロット .gitignore
+
+# ===========================================
+# OS生成ファイル
+# ===========================================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================================
+# 開発環境ファイル
+# ===========================================
+
+# エディタ・IDE設定
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# ===========================================
+# Node.js（将来の拡張用）
+# ===========================================
+
+# Dependency directories
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Package-lock files
+package-lock.json
+yarn.lock
+
+# npm
+.npm
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ===========================================
+# ビルド・デプロイ関連
+# ===========================================
+
+# Build outputs
+/dist
+/build
+/out
+
+# Deployment
+.vercel
+.netlify
+
+# ===========================================
+# 開発用一時ファイル
+# ===========================================
+
+# ログファイル
+*.log
+logs/
+*.log.*
+
+# 一時ファイル
+tmp/
+temp/
+.cache/
+.temp/
+
+# テスト関連
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+test-report/
+
+# ===========================================
+# プロジェクト固有の除外ファイル
+# ===========================================
+
+# 開発中の実験ファイル
+experimental/
+sandbox/
+test-files/
+
+# バックアップファイル
+backup/
+*.backup
+*.bak
+
+# 設定ファイル（機密情報を含む可能性）
+config/local.*
+config/development.*
+config/production.*
+
+# ===========================================
+# メディアファイル（大容量除外）
+# ===========================================
+
+# 動画ファイル
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+
+# 大きな画像ファイル（必要に応じてコメントアウト）
+# *.psd
+# *.ai
+
+# ===========================================
+# ドキュメント作業ファイル
+# ===========================================
+
+# Office一時ファイル
+~$*
+*.tmp
+
+# ===========================================
+# セキュリティ関連
+# ===========================================
+
+# API Keys（環境変数ファイル）
+.env
+.env.local
+.env.*.local
+
+# 証明書ファイル
+*.pem
+*.key
+*.crt
+
+# ===========================================
+# GitHub Pages関連
+# ===========================================
+
+# Jekyll（GitHub Pagesで使用される場合）
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# ===========================================
+# カスタム除外項目
+# ===========================================
+
+# プロジェクト固有の開発メモ
+NOTES.md
+DEVELOPMENT.md
+TODO_PRIVATE.md
+
+# 個人的な設定ファイル
+.personal-config
+personal-notes/
+
+# デバッグ用ファイル
+debug.html
+debug.js
+debug.log
